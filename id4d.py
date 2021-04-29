@@ -9,7 +9,7 @@ st.sidebar.header('ID4D')
 st.sidebar.write('The following app will help to select standards should be utilized as part of a foundational identity system.')
 st.sidebar.write('The answers provided below will customise the standards list.')
 modalities=st.sidebar.select_slider("Population Size",['1-5M','5-50M','50-100M','100M+'])
-modalities=st.sidebar.multiselect("Modalities",['Face','Fingerprint','Iris'])
+modalities=st.sidebar.multiselect("Attributes",['Face','Fingerprint','Iris','Mobile'])
 apptype=st.sidebar.multiselect("Applications Required",['Foundational ID','Population Registry'])
 
 standards = pd.read_csv('standards.csv')
@@ -23,8 +23,8 @@ if modalities and apptype:
         # Standards Requirements
 
         The following are base level requirements that are recommended for a 
-        foundational ID having modilities 
-        *{','.join(modalities)}*
+        foundational ID having attributes  
+        *{', '.join(modalities)}*
         ''')
     last_cat = ""
 #    modalities.extend(['All'])
@@ -38,7 +38,7 @@ if modalities and apptype:
             cols[0].write('**'+row.Standard+'**')
             cols[1].write(row.Description)
             if row.Modality!='All':
-                cols[1].write('Modality :'+row.Modality)
+                cols[1].write('Attribute :'+row.Modality)
             #cols[2].write(row.Category)
             last_cat = row.Category
     
