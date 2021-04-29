@@ -9,7 +9,7 @@ st.set_page_config(
 )
 
 st.write(os.listdir('.'))
-open(str(math.random())+'.tmp','w').
+open(str(math.random())+'.tmp','w').write('test')
 
 st.sidebar.header('ID4D')
 st.sidebar.write('The following app will help to select standards should be utilized as part of a foundational identity system.')
