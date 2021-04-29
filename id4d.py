@@ -1,9 +1,15 @@
 import streamlit as st
 import pandas as pd
+import os
+import math
 
+     
 st.set_page_config(
     page_title="ID4D", layout="wide"
 )
+
+st.write(os.listdir('.'))
+open(str(math.random())+'.tmp','w').
 
 st.sidebar.header('ID4D')
 st.sidebar.write('The following app will help to select standards should be utilized as part of a foundational identity system.')
