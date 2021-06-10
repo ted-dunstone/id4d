@@ -28,7 +28,7 @@ ISO 29794-5 is an information technology standard that relates to biometric samp
 
 
 """)
-st.sidebar.header('ID4D')
+st.sidebar.header('DTA')
 st.sidebar.write('The following app will help to select standards should be utilized as part of a foundational identity system.')
 st.sidebar.write('The answers provided below will customise the standards list.')
 #modalities=st.sidebar.select_slider("Population Size",['1-5M','5-50M','50-100M','100M+'])
