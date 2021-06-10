@@ -8,7 +8,7 @@ st.set_page_config(
     page_title="ID4D", layout="wide"
 )
 
-st.write(os.listdir('.'))
+#st.write(os.listdir('.'))
 open('test.tmp','w').write('test')
 
 st.header("DTA policy resource")
