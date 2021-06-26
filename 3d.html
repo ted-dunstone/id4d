@@ -88,7 +88,7 @@
 
 					const geometry = geometries[ Math.floor( Math.random() * geometries.length ) ];
 					
-					const material = new THREE.MeshStandardMaterial({
+					const material = new THREE.SpriteMaterial({
 					    map: loader.load('https://threejsfundamentals.org/threejs/resources/images/wall.jpg'),
 					  });
 					/*const material = new THREE.MeshStandardMaterial( {
@@ -190,7 +190,7 @@
 					const intersection = intersections[ 0 ];
 
 					const object = intersection.object;
-					object.material.emissive.b = 1;
+					//object.material.emissive.b = 1;
 					controller.attach( object );
 
 					controller.userData.selected = object;
@@ -206,7 +206,7 @@
 				if ( controller.userData.selected !== undefined ) {
 
 					const object = controller.userData.selected;
-					object.material.emissive.b = 0;
+					//object.material.emissive.b = 0;
 					group.attach( object );
 
 					controller.userData.selected = undefined;
@@ -259,7 +259,7 @@
 				while ( intersected.length ) {
 
 					const object = intersected.pop();
-					object.material.emissive.r = 0;
+					//object.material.emissive.r = 0;
 
 				}
 
