@@ -86,9 +86,9 @@
 
 					const geometry = geometries[ Math.floor( Math.random() * geometries.length ) ];
 					
-					const map = new THREE.TextureLoader().load( 'https://static.ffx.io/images/$zoom_0.15%2C$multiply_0.8513%2C$ratio_1.5%2C$width_538%2C$x_76%2C$y_64/t_crop_custom/q_86%2Cf_auto/9da4605188cbfe01e2d604dc60bd13cef7f6d4eb');
-					const material = new THREE.SpriteMaterial( { map: map } );
-
+					const material = new THREE.MeshBasicMaterial({
+					    map: loader.load('https://threejsfundamentals.org/threejs/resources/images/wall.jpg'),
+					  });
 					/*const material = new THREE.MeshStandardMaterial( {
 						color: Math.random() * 0xffffff,
 						roughness: 0.7,
