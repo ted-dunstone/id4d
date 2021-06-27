@@ -84,12 +84,12 @@
 					new THREE.TorusGeometry( 0.2, 0.04, 64, 32 )*/
 				];
 
-				for ( let i = 0; i < 200; i ++ ) {
+				for ( let i = 0; i < 10; i ++ ) {
 
 					const geometry = geometries[ Math.floor( Math.random() * geometries.length ) ];
 					
 					const material = new THREE.MeshStandardMaterial({
-					    map: loader.load('https://threejsfundamentals.org/threejs/resources/images/wall.jpg'),
+					    map: loader.load('https://thispersondoesnotexist.com/image'),
 					  });
 					/*const material = new THREE.MeshStandardMaterial( {
 						color: Math.random() * 0xffffff,
