@@ -192,7 +192,7 @@
 					const intersection = intersections[ 0 ];
 
 					const object = intersection.object;
-					if controller.name == 'left' {
+					if (controller.name == 'left') {
 						object.material.emissive.b = 1;
 						controller.attach( object );
 					} else {
