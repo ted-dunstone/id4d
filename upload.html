@@ -1,0 +1,159 @@
+  
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mass File Upload Using HTML 5 and JavaScript</title>
+    <style type="text/css">
+        table.zaklad {
+            border-collapse: collapse;
+            margin: 5px;
+        }
+
+        table.zaklad th, table.zaklad td {
+            border: solid 1px black;
+            padding: 4px;
+        }
+
+    </style>
+<!-- Google analytics -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1281621-11']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+<body>
+<h1>Mass File Upload Using HTML 5 and JavaScript</h1>
+
+This page demonstrates how to upload a large number of files from a browser to a server. It works in Chrome
+and Firefox browsers. There are two tricks in use:
+<ul>
+ <li> In Chrome, a file input field with <code>webkitdirectory</code> attribute can select a whole directory,
+    while in Firefox, a file input field with <code>multiple</code> attribute can select multiple files.
+ <li> The <a href="http://www.w3.org/TR/XMLHttpRequest2/">XmlHttpRequest</a> object in JavaScript allows to select any files
+  from the selection and upload them using HTTP POST while displaying a progress meter.
+</ul>
+My code was inspired by <a href="http://stackoverflow.com/questions/5826286/how-do-i-use-google-chrome-11s-upload-folder-feature-in-my-own-code">How do I use Google Chrome 11's upload folder feature
+in my onw code ?</a> and <a href="http://www.matlus.com/html5-file-upload-with-progress/">HTML5 FIle Upload with progress</a> articles.
+<p>
+
+Here is the form:
+<ul id="dir-tree"></ul>
+Select a directory (in Chrome) or multiple files (in Firefox):
+<form id="f1" action="${pageContext.request.contextPath}/hlava" enctype="multipart/form-data" method="post">
+    <input name="dir" id="dir_input" type="file" webkitdirectory directory multiple/><br/>
+    <label for="pripona">Filter file by file extension: </label>
+    <select id="pripona">
+        <option value="png">png</option>
+        <option value="jpg">jpg</option>
+        <option value="doc">doc</option>
+        <option value="fits">FITS</option>
+    </select>
+    <div id="dirinfo">
+    </div>
+    <!--<input type="button" onclick="uploadFilteredFiles()" value="Upload"/>-->
+    <input type="button" onclick="alert('No server URL for upload specified, modify code.');" value="Upload"/>
+</form>
+
+<div id="fileInfo">
+    <div id="fileName"></div>
+    <div id="fileSize"></div>
+    <div id="fileType"></div>
+</div>
+<div id="progressNumber"></div>
+<pre id="serverResponse"></pre>
+
+<script type="text/javascript">
+
+    //handler for displaying filtered files
+    function printFiles(e) {
+        console.log('onchange called with e=' + e);
+        var fileList = filterFiles(document.getElementById('dir_input').files);
+        var dirinfo = '<table class="zaklad"><tr><th>file name</th><th>path</th><th>size<th>type</tr>';
+        for (var i = 0, file; file = fileList[i]; i++) {
+            var fileSize = 0;
+            if (file.size > 1024 * 1024)
+                fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
+            else
+                fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
+            dirinfo += '<tr><td>' + file.name + '<td>' + file.webkitRelativePath + '<td>' + fileSize + '<td>' + file.type + '</tr>';
+        }
+        dirinfo += '</table>';
+        document.getElementById('dirinfo').innerHTML = dirinfo;
+    }
+
+    document.getElementById('dir_input').onchange = printFiles;
+    document.getElementById('pripona').onchange = printFiles;
+
+    //filter files by extension from all files selected by the user
+    function filterFiles(fileList) {
+        var filteredFiles = [];
+        var pripSel = document.getElementById('pripona');
+        var pripona = pripSel.options[pripSel.selectedIndex].value;
+        console.log('pripona=' + pripona);
+        for (var i = 0, file; file = fileList[i]; i++) {
+            if (endsWithIgnoreCase(file.name, pripona))
+                filteredFiles.push(file);
+        }
+        return filteredFiles;
+    }
+
+    //JavaSript lacks this method on Strings
+    function endsWithIgnoreCase(str, suffix) {
+        return str.toLowerCase().indexOf(suffix.toLowerCase(), str.length - suffix.length) !== -1;
+    }
+
+    //upload files
+    function uploadFilteredFiles() {
+        var xhr = new XMLHttpRequest();
+        var fileList = filterFiles(document.getElementById('dir_input').files);
+        var fd = new FormData();
+        for (var i = 0, file; file = fileList[i]; i++) {
+            fd.append("file" + i, file);
+        }
+        /* event listeners */
+        // http://www.w3.org/TR/XMLHttpRequest2/#xmlhttprequestupload
+        // http://www.w3.org/TR/progress-events/#interface-progressevent
+        xhr.upload.addEventListener("progress", uploadProgress, false);
+        xhr.addEventListener("load", uploadComplete, false);
+        xhr.addEventListener("error", uploadFailed, false);
+        xhr.addEventListener("abort", uploadCanceled, false);
+        xhr.open("POST", "/upload");
+        xhr.send(fd);
+    }
+
+    //callbacks for upload
+    function uploadProgress(evt) {
+        if (evt.lengthComputable) {
+            var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+            document.getElementById('progressNumber').innerHTML = percentComplete.toString() + '%';
+        }
+        else {
+            document.getElementById('progressNumber').innerHTML = 'unable to compute';
+        }
+    }
+
+    function uploadComplete(evt) {
+        /* This event is raised when the server send back a response */
+        document.getElementById('serverResponse').innerHTML = evt.target.responseText;
+    }
+
+    function uploadFailed(evt) {
+        alert("There was an error attempting to upload the file.");
+    }
+
+    function uploadCanceled(evt) {
+        alert("The upload has been canceled by the user or the browser dropped the connection.");
+    }
+</script>
+
+</body>
+</html>
