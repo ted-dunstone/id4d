@@ -62,7 +62,7 @@ if modalities and apptype:
             if type(row.Standard)==type(''):
                 if row.Category!=last_cat:
                     st.header(row.Category)
-                cols = st.beta_columns(4)
+                cols = st.columns(4)
                 checked[row.Standard]=cols[0].checkbox(row.Standard)
                 cols[1].write('**'+row.Standard+'**')
                 cols[2].write(row.Description)
