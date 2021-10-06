@@ -45,7 +45,7 @@ standards = pd.read_csv('standards.csv')
 checked={}
 
 if modalities and apptype:
-    with st.beta_expander('Settings',True):
+    with st.expander('Settings',True):
         st.write(f'''
             
             # Standards Requirements
@@ -71,6 +71,6 @@ if modalities and apptype:
                 if show_link:
                     cols[3].write(f"[Link]({row.Link})")
                 last_cat = row.Category
-    with st.beta_expander('final'):
+    with st.expander('final'):
         st.write(checked)
     
