@@ -11,24 +11,7 @@ st.set_page_config(
 #st.write(os.listdir('.'))
 open('test.tmp','w').write('test')
 
-st.header("DTA policy resource")
-st.image("https://dta-www-drupal-20180130215411153400000001.s3.ap-southeast-2.amazonaws.com/s3fs-public/images/index/dta-logo-thumb_9.png")
-st.subheader("Facial image quality stamndards")
-st.markdown("""
 
-# ISO/IEC 19794-5
-
-ISO 19794-5 is an information technology standard that relates to biometric data interchange formats and is intended to provide a face image format for face recognition applications requiring exchange of face image data. This standard also provides information for the best practice of photography of faces, particularly in the ‘passport style’ for the creation of identity documents. All references to ‘quality scores’ are given in the context of sending files between endpoints, and the only reference to ‘sample quality’ is a direct refence to ISO 29794-1.
-
-ISO 19794-5 does provide information relevant to quality scores, however this information is mostly related to the standardised storage and interchange of facial images, largely in the context of scene-controlled passport-style images for the purposes of creating definitive biometric anchors.
-
-# ISO/IEC 29794-5
-
-ISO 29794-5 is an information technology standard that relates to biometric sample quality and provides to definitions and specific methodologies for the computation of objective, qualitative quality scores for facial images. Additionally, this standard discusses the quality aspects of a facial image that will affect recognition outcomes and matching accuracy.
-
-
-""")
-st.sidebar.header('DTA')
 st.sidebar.write('The following app will help to select standards should be utilized as part of a foundational identity system.')
 st.sidebar.write('The answers provided below will customise the standards list.')
 #modalities=st.sidebar.select_slider("Population Size",['1-5M','5-50M','50-100M','100M+'])
